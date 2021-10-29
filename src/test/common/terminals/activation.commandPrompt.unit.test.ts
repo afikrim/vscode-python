@@ -205,6 +205,7 @@ suite('Terminal Environment Activation (cmd/powershell)', () => {
                     );
                 });
 
+                const setExecutionPolicyScript = 'Set-ExecutionPolicy Unrestricted -Scope Process';
                 test('Ensure powershell files are supported by powershell', async () => {
                     const bash = new CommandPromptAndPowerShell(serviceContainer.object);
 
@@ -216,7 +217,7 @@ suite('Terminal Environment Activation (cmd/powershell)', () => {
                     const command = await bash.getActivationCommands(resource, TerminalShellType.powershell);
 
                     expect(command).to.be.deep.equal(
-                        [`& ${pathToScriptFile.fileToCommandArgument()}`.trim()],
+                        [setExecutionPolicyScript, `& ${pathToScriptFile.fileToCommandArgument()}`.trim()],
                         'Invalid command',
                     );
                 });
@@ -232,7 +233,7 @@ suite('Terminal Environment Activation (cmd/powershell)', () => {
                     const command = await bash.getActivationCommands(resource, TerminalShellType.powershellCore);
 
                     expect(command).to.be.deep.equal(
-                        [`& ${pathToScriptFile.fileToCommandArgument()}`.trim()],
+                        [setExecutionPolicyScript, `& ${pathToScriptFile.fileToCommandArgument()}`.trim()],
                         'Invalid command',
                     );
                 });

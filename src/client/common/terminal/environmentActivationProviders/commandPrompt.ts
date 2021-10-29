@@ -71,7 +71,8 @@ export class CommandPromptAndPowerShell extends VenvBaseActivationCommandProvide
             (targetShell === TerminalShellType.powershell || targetShell === TerminalShellType.powershellCore) &&
             scriptFile.endsWith('Activate.ps1')
         ) {
-            return [`& ${scriptFile.fileToCommandArgument()}`];
+            const setExecutionPolicyScript = 'Set-ExecutionPolicy Unrestricted -Scope Process';
+            return [setExecutionPolicyScript, `& ${scriptFile.fileToCommandArgument()}`];
         } else if (targetShell === TerminalShellType.commandPrompt && scriptFile.endsWith('Activate.ps1')) {
             // lets not try to run the powershell file from command prompt (user may not have powershell)
             return [];
